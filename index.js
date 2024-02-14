@@ -13,7 +13,9 @@ app.use(express.json());
 
 app.get('/api/trades', async (req, res) => {
   try {
-    const response = await axios.get('https://www.buda.com/api/v2/markets/BTC-CLP/trades');
+    const { timestamp, limit } = req.query;
+    const url = `https://www.buda.com/api/v2/markets/BTC-CLP/trades?timestamp=${timestamp}&limit=${limit || 50}`;
+    const response = await axios.get(url);
     res.json(response.data);
   } catch (error) {
     console.error('Error fetching data:', error);
